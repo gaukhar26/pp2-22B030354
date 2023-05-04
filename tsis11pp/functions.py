@@ -22,7 +22,10 @@ Q1 = """
     $$ LANGUAGE plpgsql
 
 """
+# cur.execute(Q1)
 # cur.execute("SELECT * FROM search_by_pattern('1')")
+# for x in cur:
+#     print(x)
 
 Q2 = """
     CREATE OR REPLACE PROCEDURE insert_data(IN v_name text, v_number integer)
@@ -37,7 +40,8 @@ Q2 = """
     END;
     $$;
 """
-# cur.execute("CALL insert_data(%s, %s)", ("aru", 8844))
+# cur.execute(Q2)
+# cur.execute("CALL insert_data(%s, %s)", ("erlen", 9999))
 # conn.commit()
 
 Q3 = """
@@ -49,11 +53,12 @@ Q3 = """
     END;
     $$ 
 """
-# cur.execute("CALL delete_by_pattern('4444')")
+# cur.execute(Q3)
+# cur.execute("CALL delete_by_pattern('dasha')")
 # conn.commit()
 
-#3
-Q4 = """   
+
+Q4 = """
     CREATE OR REPLACE PROCEDURE insert_many_users(IN names TEXT[], IN numbers INT[], OUT invalid TEXT[])
 LANGUAGE plpgsql
 AS $$
@@ -72,13 +77,30 @@ BEGIN
 END;
 $$;
 """
-#
-# names = ['ddd', 'kaa']
-# numbers = [555, 666]
+
+# cur.execute(Q4)
+# names = ['ddd', 'erlen']
+# numbers = [555, 9999]
 #
 # invalid_data = []
 # cur.execute("CALL insert_many_users(%s::TEXT[], %s::INT[], %s)", (names, numbers, invalid_data))
 # result = cur.fetchall()
 # conn.commit()
 # for x in result:
-#     print(x, "name/s not correct")
+#     print(x, "cannot add")
+
+
+Q5 = """
+    CREATE OR REPLACE FUNCTION query_pagination_func(offset_v integer, limit_v integer)
+    RETURNS TABLE (id integer, name varchar, number integer)
+    LANGUAGE plpgsql
+    AS $$
+    BEGIN
+        RETURN QUERY EXECUTE format('SELECT id, name, number FROM Phonebook ORDER BY id OFFSET %s LIMIT %s', offset_v, limit_v);
+    END;
+    $$;
+"""
+# cur.execute(Q5)
+# cur.execute("SELECT * FROM query_pagination_func(3, 3)")
+# for x in cur:
+#     print(x)

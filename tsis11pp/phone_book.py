@@ -35,7 +35,7 @@ if way == 0:
         conn.commit()
 
 elif way == 1:
-    with open('phonelist.csv', newline='') as csvfile:
+    with open('phonel.csv', newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
 
         for row in reader:
