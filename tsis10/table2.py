@@ -10,7 +10,7 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 
-# cur.execute("ALTER USER postgres WITH PASSWORD '1234';")
+# cur.execute("ALTER USER postgres WITH PASSWORD 'пфглрфктгкпфшырф2607';")
 # conn.commit()
 
 Q1 = "CREATE TABLE Phonebook (id SERIAL PRIMARY KEY, name VARCHAR(50), number INT)"
@@ -37,11 +37,11 @@ elif way == 1:
     name = ''
     number = ''
 
-    with open('phonelist.csv', newline='') as csvfile:
+    with open('phonel.csv', newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
 
         for row in reader:
-            cur.execute("SELECT name FROM Phonebook WHERE NUMBER = %s",row[1])
+            cur.execute("SELECT name FROM Phonebook WHERE NUMBER = %s",(row[1],))
             name = cur.fetchone()
             if name:
                 print(f"number {row[1]} already exists")
